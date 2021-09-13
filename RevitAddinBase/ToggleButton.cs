@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RevitAddinBase
 {
-    public class ToggleButton : ButtonBase
+    public class ToggleButton : RevitCommandBase
     {
     }
 }

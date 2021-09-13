@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RevitAddinBase
 {
-    public class ComboBox : RibbonItemBase 
+    public class ComboBox : ButtonListBase 
     {
     }
 }

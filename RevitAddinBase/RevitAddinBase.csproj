@@ -32,6 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdWindows, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Revit.AdWindows.x64.2021.0.0\lib\net48\AdWindows.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI, Version=21.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\Revit.RevitApi.x64.2021.0.0\lib\net48\RevitAPI.dll</HintPath>
     </Reference>
@@ -40,16 +45,27 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIFramework">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\UIFramework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddinApplicationBase.cs" />
     <Compile Include="ArrowButton.cs" />
-    <Compile Include="ButtonBase.cs" />
+    <Compile Include="CommandApplicationBase.cs" />
+    <Compile Include="Label.cs" />
+    <Compile Include="MultiCommandApplication.cs" />
+    <Compile Include="RevitCommandBase.cs" />
     <Compile Include="ButtonListBase.cs" />
     <Compile Include="ComboBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,14 +73,16 @@
     <Compile Include="PushButton.cs" />
     <Compile Include="RadioGroup.cs" />
     <Compile Include="RibbonItemBase.cs" />
+    <Compile Include="SingletonApplication.cs" />
+    <Compile Include="SingletonCommand.cs" />
     <Compile Include="SplitButton.cs" />
     <Compile Include="StackItem.cs" />
     <Compile Include="Textbox.cs" />
     <Compile Include="ToggleButton.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
-    <None Include="RevitAddinBaseDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

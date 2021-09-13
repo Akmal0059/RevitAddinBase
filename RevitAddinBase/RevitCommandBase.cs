@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace RevitAddinBase
 {
-    public abstract class ButtonBase : RibbonItemBase, IExternalCommand
+    public abstract class RevitCommandBase : RibbonItemBase
     {
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        protected RevitCommandBase()
         {
-            throw new NotImplementedException();
+             
         }
     }
 }
