@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAddinBase
+namespace RevitAddinBase.RevitControls
 {
-    class SingletonCommand : CommandApplicationBase
+    public class ComboBox : ButtonListBase 
     {
     }
 }

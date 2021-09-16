@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAddinBase
+namespace RevitAddinBase.RevitControls
 {
     public abstract class RevitCommandBase : RibbonItemBase
     {
+        public string IconPath { get; set; }
+
         protected RevitCommandBase()
         {
              

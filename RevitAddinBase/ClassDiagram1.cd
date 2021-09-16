@@ -1,134 +1,127 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="RevitAddinBase.AddinApplicationBase" Collapsed="true">
-    <Position X="38.25" Y="4.5" Width="1.5" />
+    <Position X="37.75" Y="4.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAgAAABAAAAEAABEAAAAAQACAAABIEAAQAAIAAQAAAA=</HashCode>
       <FileName>AddinApplicationBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="RevitAddinBase.ArrowButton" Collapsed="true">
-    <Position X="22.25" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ArrowButton.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="RevitAddinBase.ButtonListBase" Collapsed="true">
+  <Class Name="RevitAddinBase.RevitControls.ButtonListBase">
     <Position X="31.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ButtonListBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RevitControls\Base\ButtonListBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.ComboBox" Collapsed="true">
+  <Class Name="RevitAddinBase.RevitControls.ComboBox" Collapsed="true">
     <Position X="35.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ComboBox.cs</FileName>
+      <FileName>RevitControls\ComboBox.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.CommandApplicationBase" Collapsed="true">
-    <Position X="17" Y="8.5" Width="1.5" />
+  <Class Name="RevitAddinBase.RevitCommands.CommandApplicationBase" Collapsed="true">
+    <Position X="17" Y="9" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>CommandApplicationBase.cs</FileName>
+      <FileName>RevitCommands\Base\CommandApplicationBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.Label" Collapsed="true">
+  <Class Name="RevitAddinBase.RevitControls.Label" Collapsed="true">
     <Position X="15.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Label.cs</FileName>
+      <FileName>RevitControls\Label.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.MultiCommandApplication" Collapsed="true">
-    <Position X="14.5" Y="9.75" Width="2.25" />
+  <Class Name="RevitAddinBase.RevitCommands.MultiCommandApplication" Collapsed="true">
+    <Position X="14.5" Y="10.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MultiCommandApplication.cs</FileName>
+      <FileName>RevitCommands\MultiCommandApplication.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.PullButton" Collapsed="true">
+  <Class Name="RevitAddinBase.RevitControls.PullButton" Collapsed="true">
     <Position X="33.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PullButton.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RevitControls\PullButton.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.PushButton" Collapsed="true">
-    <Position X="20" Y="7.25" Width="1.5" />
+  <Class Name="RevitAddinBase.RevitControls.PushButton">
+    <Position X="20" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PushButton.cs</FileName>
+      <FileName>RevitControls\PushButton.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.RadioGroup" Collapsed="true">
+  <Class Name="RevitAddinBase.RevitControls.RadioGroup" Collapsed="true">
     <Position X="26.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>RadioGroup.cs</FileName>
+      <FileName>RevitControls\RadioGroup.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.RevitCommandBase" Collapsed="true">
-    <Position X="18.75" Y="5.75" Width="1.5" />
+  <Class Name="RevitAddinBase.RevitControls.RevitCommandBase">
+    <Position X="18.75" Y="5.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>RevitCommandBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RevitControls\Base\RevitCommandBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.RibbonItemBase" Collapsed="true">
-    <Position X="25.5" Y="4.5" Width="1.5" />
+  <Class Name="RevitAddinBase.RevitControls.RibbonItemBase">
+    <Position X="25.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAgAAAAAAQAAAAAAAAAAAAACAAAAAA=</HashCode>
-      <FileName>RibbonItemBase.cs</FileName>
+      <FileName>RevitControls\Base\RibbonItemBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.SingletonApplication" Collapsed="true">
-    <Position X="17" Y="9.75" Width="1.75" />
+  <Class Name="RevitAddinBase.RevitCommands.SingletonApplication" Collapsed="true">
+    <Position X="17" Y="10.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SingletonApplication.cs</FileName>
+      <FileName>RevitCommands\SingletonApplication.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.SingletonCommand" Collapsed="true">
-    <Position X="19.25" Y="9.75" Width="2" />
+  <Class Name="RevitAddinBase.RevitCommands.SingletonCommand" Collapsed="true">
+    <Position X="19.25" Y="10.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SingletonCommand.cs</FileName>
+      <FileName>RevitCommands\SingletonCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.SplitButton" Collapsed="true">
+  <Class Name="RevitAddinBase.RevitControls.SplitButton" Collapsed="true">
     <Position X="29" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SplitButton.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>RevitControls\SplitButton.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.StackItem" Collapsed="true">
+  <Class Name="RevitAddinBase.RevitControls.StackItem" Collapsed="true">
     <Position X="31.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>StackItem.cs</FileName>
+      <FileName>RevitControls\StackItem.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.Textbox" Collapsed="true">
+  <Class Name="RevitAddinBase.RevitControls.Textbox">
     <Position X="24.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Textbox.cs</FileName>
+      <FileName>RevitControls\Textbox.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RevitAddinBase.ToggleButton" Collapsed="true">
-    <Position X="17.75" Y="7.25" Width="1.5" />
+  <Class Name="RevitAddinBase.RevitControls.ToggleButton" Collapsed="true">
+    <Position X="17.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ToggleButton.cs</FileName>
+      <FileName>RevitControls\ToggleButton.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="RevitAddinBase.RevitExternalApplicationType" Collapsed="true">
-    <Position X="38.25" Y="5.75" Width="1.5" />
+    <Position X="40.5" Y="4.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AddinApplicationBase.cs</FileName>

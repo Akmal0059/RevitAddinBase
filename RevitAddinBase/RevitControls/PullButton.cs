@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAddinBase
+namespace RevitAddinBase.RevitControls
 {
-    class CommandApplicationBase
+    public class PullButton : ButtonListBase
     {
+        public string IconPath {  get; set; }
     }
 }

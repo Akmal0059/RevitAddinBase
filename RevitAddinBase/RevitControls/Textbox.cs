@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAddinBase
+namespace RevitAddinBase.RevitControls
 {
-    public class ToggleButton : RevitCommandBase
+    public class Textbox : RibbonItemBase
     {
     }
 }

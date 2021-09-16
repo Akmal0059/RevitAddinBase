@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.UI;
 
-namespace RevitAddinBase
+namespace RevitAddinBase.RevitControls
 {
     public class PushButton : RevitCommandBase
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAddinBase
+namespace RevitAddinBase.RevitCommands
 {
-    public class ArrowButton : RibbonItemBase 
+    class SingletonApplication : CommandApplicationBase
     {
     }
 }

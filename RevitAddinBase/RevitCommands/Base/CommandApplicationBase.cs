@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAddinBase
+namespace RevitAddinBase.RevitCommands
 {
-    public abstract class ButtonListBase:RibbonItemBase
+    class CommandApplicationBase
     {
     }
 }
