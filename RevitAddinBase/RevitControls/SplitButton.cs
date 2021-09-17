@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAddinBase
+namespace RevitAddinBase.RevitControls
 {
-    public class RadioGroup : ButtonListBase 
+    public class SplitButton : ButtonListBase
     {
+        public int? SelectedIndex { get; set; }
     }
 }
