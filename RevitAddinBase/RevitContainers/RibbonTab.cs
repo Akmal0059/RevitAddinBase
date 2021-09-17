@@ -21,6 +21,7 @@ namespace RevitAddinBase.RevitContainers
     [XmlInclude(typeof(PullButton))]
     [XmlInclude(typeof(ComboBox))]
     [XmlInclude(typeof(RibbonPanel))]
+    [XmlInclude(typeof(Separator))]
     #endregion
     public class RibbonTab
     {
