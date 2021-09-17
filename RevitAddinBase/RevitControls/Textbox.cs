@@ -8,5 +8,8 @@ namespace RevitAddinBase.RevitControls
 {
     public class Textbox : RibbonItemBase
     {
+        public string HintText { get; set; }
+        public double TextboxWidth { get; set; }
+        public string IconPath { get; set; }
     }
 }
