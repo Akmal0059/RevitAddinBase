@@ -41,7 +41,14 @@ namespace RevitAddinBase.RevitContainers
 
         public Autodesk.Windows.RibbonTab CreateTab(Autodesk.Revit.UI.UIControlledApplication app, Dictionary<string, object> resources)
         {
-            throw new NotImplementedException();
+            Autodesk.Windows.RibbonTab tab = new Autodesk.Windows.RibbonTab();
+            //tab settings
+
+            //tab settings
+            foreach(var panel in Panels)
+                tab.Panels.Add(panel.CreatePanel(app, resources));
+
+            return tab;
         }
     }
 }

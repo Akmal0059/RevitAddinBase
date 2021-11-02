@@ -20,7 +20,17 @@ namespace RevitAddinBase.RevitContainers
 
         public Autodesk.Windows.RibbonPanel CreatePanel(UIControlledApplication app, Dictionary<string, object> resources)
         {
-            throw new NotImplementedException();
+            Autodesk.Windows.RibbonPanel panel = new Autodesk.Windows.RibbonPanel();
+            Autodesk.Windows.RibbonPanelSource source = new Autodesk.Windows.RibbonPanelSource();
+            //source settings
+
+            //source settings
+            foreach (var item in Items)
+            {
+                source.Items.Add(item.CreateRibbon(app, resources));
+            }
+            panel.Source = source;
+            return panel;
         }
     }
 }
