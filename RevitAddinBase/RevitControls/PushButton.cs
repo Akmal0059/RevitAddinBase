@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.UI;
+using AdWin = Autodesk.Windows;
 
 namespace RevitAddinBase.RevitControls
 {
@@ -12,6 +13,11 @@ namespace RevitAddinBase.RevitControls
         public PushButton()
         {
 
+        }
+
+        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources)
+        {
+            throw new NotImplementedException();
         }
     }
 }

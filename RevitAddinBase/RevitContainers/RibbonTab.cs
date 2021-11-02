@@ -30,7 +30,7 @@ namespace RevitAddinBase.RevitContainers
 
         public RibbonTab()
         {
-
+            Panels = new List<RibbonPanel>();
         }
 
         public RibbonTab(string name)
@@ -39,25 +39,9 @@ namespace RevitAddinBase.RevitContainers
             Panels = new List<RibbonPanel>();
         }
 
-        public void Serialize(string path)
+        public Autodesk.Windows.RibbonTab CreateTab(Autodesk.Revit.UI.UIControlledApplication app, Dictionary<string, object> resources)
         {
-            XmlSerializer formatter = new XmlSerializer(typeof(RibbonTab));
-
-            // получаем поток, куда будем записывать сериализованный объект
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, this);
-            }
-        }
-        public static RibbonTab Deserialize(string path)
-        {
-            RibbonTab panel = null;
-            XmlSerializer formatter = new XmlSerializer(typeof(RibbonTab));
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                panel = (RibbonTab)formatter.Deserialize(fs);
-            }
-            return panel;
+            throw new NotImplementedException();
         }
     }
 }

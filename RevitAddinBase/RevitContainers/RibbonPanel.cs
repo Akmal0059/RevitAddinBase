@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Autodesk.Windows;
+using Autodesk.Revit.UI;
 
 namespace RevitAddinBase.RevitContainers
 {
@@ -15,5 +17,10 @@ namespace RevitAddinBase.RevitContainers
         public string Name { get; set; }
         public string Text { get; set; }
         public List<RibbonItemBase> Items { get; set; }
+
+        public Autodesk.Windows.RibbonPanel CreatePanel(UIControlledApplication app, Dictionary<string, object> resources)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
