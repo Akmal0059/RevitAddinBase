@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using AdWin = Autodesk.Windows;
 using System.Xml.Serialization;
 using Autodesk.Revit.UI;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Drawing;
 
 namespace RevitAddinBase.RevitControls
 {
@@ -22,5 +26,37 @@ namespace RevitAddinBase.RevitControls
 
         public abstract AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources);
 
+        protected static ImageSource GetImageSource(string path)
+        {
+            if (path == null)
+                return null;
+
+            var bitmap = new Bitmap(path);
+            var imageSource = new BitmapImage();
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+                imageSource.BeginInit();
+                imageSource.StreamSource = memory;
+                imageSource.CacheOption = BitmapCacheOption.OnLoad;
+                imageSource.EndInit();
+            }
+            return imageSource;
+        }
+        protected static ImageSource GetImageSource(Bitmap bitmap)
+        {
+            var imageSource = new BitmapImage();
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+                imageSource.BeginInit();
+                imageSource.StreamSource = memory;
+                imageSource.CacheOption = BitmapCacheOption.OnLoad;
+                imageSource.EndInit();
+            }
+            return imageSource;
+        }
     }
 }

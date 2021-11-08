@@ -18,13 +18,15 @@ namespace RevitAddinBase.RevitContainers
         public string Text { get; set; }
         public List<RibbonItemBase> Items { get; set; }
 
-        public Autodesk.Windows.RibbonPanel CreatePanel(UIControlledApplication app, Dictionary<string, object> resources)
+        public Autodesk.Windows.RibbonPanel CreatePanel(UIControlledApplication app, Dictionary<string, object> resources, Autodesk.Windows.RibbonTab tab)
         {
-            Autodesk.Windows.RibbonPanel panel = new Autodesk.Windows.RibbonPanel();
-            Autodesk.Windows.RibbonPanelSource source = new Autodesk.Windows.RibbonPanelSource();
+            app.CreateRibbonPanel(tab.Title, Text);
+            Autodesk.Windows.RibbonPanel panel = tab.Panels.FirstOrDefault(x => x.Source.Title == Text);
+            RibbonPanelSource source = panel.Source;
             //source settings
 
             //source settings
+            
             foreach (var item in Items)
             {
                 source.Items.Add(item.CreateRibbon(app, resources));

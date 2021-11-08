@@ -114,6 +114,7 @@ namespace RevitAddinBase
             foreach (var tab in tabs)
             {
                 var adWinTab = tab.CreateTab(uic_app, resourcesDictionary);
+                adWinTab.Title = tab.Title;
                 AdWin.ComponentManager.Ribbon.Tabs.Add(adWinTab);
             }
             //btn.LargeImage = ImageSourceFromBitmap((Bitmap)resorcesDictionary["Image"]);
@@ -184,7 +185,7 @@ namespace RevitAddinBase
             else
                 return $@"{assemblyFolder}\InpadPlugins.resources";
         }
-        RevitContainers.RibbonTab[] Deserialize(string path)
+        private RevitContainers.RibbonTab[] Deserialize(string path)
         {
             RevitContainers.RibbonTab[] tabs = null;
             XmlSerializer formatter = new XmlSerializer(typeof(RevitContainers.RibbonTab[]));

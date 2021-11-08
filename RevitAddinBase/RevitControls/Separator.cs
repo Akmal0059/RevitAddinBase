@@ -11,7 +11,7 @@ namespace RevitAddinBase.RevitControls
     {
         public override Autodesk.Windows.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources)
         {
-            throw new NotImplementedException();
+            return new Autodesk.Windows.RibbonSeparator();
         }
     }
 }

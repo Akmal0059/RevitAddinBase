@@ -26,6 +26,7 @@ namespace RevitAddinBase.RevitContainers
     public class RibbonTab
     {
         public string Name { get; set; }
+        public string Title { get; set; }
         public List<RibbonPanel> Panels { get; set; }
 
         public RibbonTab()
@@ -41,12 +42,14 @@ namespace RevitAddinBase.RevitContainers
 
         public Autodesk.Windows.RibbonTab CreateTab(Autodesk.Revit.UI.UIControlledApplication app, Dictionary<string, object> resources)
         {
-            Autodesk.Windows.RibbonTab tab = new Autodesk.Windows.RibbonTab();
+            app.CreateRibbonTab(Title);
+            var control = Autodesk.Windows.ComponentManager.Ribbon;
+            Autodesk.Windows.RibbonTab tab = control.Tabs.FirstOrDefault(x => x.Name == Title);
             //tab settings
 
             //tab settings
-            foreach(var panel in Panels)
-                tab.Panels.Add(panel.CreatePanel(app, resources));
+            foreach (var panel in Panels)
+                tab.Panels.Add(panel.CreatePanel(app, resources, tab));
 
             return tab;
         }
