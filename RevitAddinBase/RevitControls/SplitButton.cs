@@ -15,31 +15,41 @@ namespace RevitAddinBase.RevitControls
     {
         public int? SelectedIndex { get; set; }
 
-        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources)
+        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
         {
             CreateRevitApiSplitButton(app, resources);
             var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == "Addins");
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == "Temp").Source;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
+            SelectedIndex = (int?)resources[$"{CommandName}_SelectedIndex"];
 
-            AdWin.RibbonSplitButton ribbon = source.Items.FirstOrDefault(x => x.Name == CommandName) as AdWin.RibbonSplitButton;
-            ribbon.Image = GetImageSource((Bitmap)resources[$"{CommandName}_Button_caption"]);
+            AdWin.RibbonSplitButton ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonSplitButton;
             ribbon.IsSplit = true;
             foreach (var item in Items)
                 ribbon.Items.Add(item.CreateRibbon(app, resources));
+            if (SelectedIndex >= 0)
+            {
+                ribbon.Current = ribbon.Items[SelectedIndex.Value];
+                ribbon.IsSynchronizedWithCurrentItem = false;
+            }
+            if (isStacked)
+            {
+                ribbon.Orientation = System.Windows.Controls.Orientation.Horizontal;
+                ribbon.Size = AdWin.RibbonItemSize.Standard;
+            }
             return ribbon;
         }
 
         private void CreateRevitApiSplitButton(UI.UIControlledApplication app, Dictionary<string, object> resources)
         {
-            var panel = app.GetRibbonPanels(UI.Tab.AddIns).FirstOrDefault(x => x.Name == "Temp");
+            var panel = app.GetRibbonPanels(AddinApplicationBase.TempTabName).FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
             if (panel == null)
-                panel = app.CreateRibbonPanel(UI.Tab.AddIns, "Temp");
+                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
 
             string name = CommandName;
-            string text = (string)resources[$"{CommandName}_Button_caption"];
-            UI.SplitButtonData splitButtonData = new UI.SplitButtonData(name, text);
-            UI.SplitButton splitBtn = panel.AddItem(splitButtonData) as UI.SplitButton;
+            Text = (string)resources[$"{CommandName}_Button_caption"];
+            UI.SplitButtonData splitButtonData = new UI.SplitButtonData(name, Text);
+            panel.AddItem(splitButtonData);
         }
     }
 }

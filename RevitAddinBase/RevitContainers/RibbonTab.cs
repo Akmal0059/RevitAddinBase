@@ -49,7 +49,11 @@ namespace RevitAddinBase.RevitContainers
 
             //tab settings
             foreach (var panel in Panels)
-                tab.Panels.Add(panel.CreatePanel(app, resources, tab));
+            {
+                app.CreateRibbonPanel(Title, panel.Text);
+                var createdPanel = panel.CreatePanel(app, resources, tab);
+                //tab.Panels.Add(createdPanel);
+            }
 
             return tab;
         }

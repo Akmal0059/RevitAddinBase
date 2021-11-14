@@ -17,14 +17,15 @@ namespace RevitAddinBase.RevitControls
     {
         [XmlIgnore]
         public AdWin.RibbonItem RevitRibbonItem { get; set; }
-        public string CommandName { get ; set; }
+        public string CommandName { get; set; }
         public string LongDescription { get; set; }
         public string ShortDescription { get; set; }
         public string ContextualHelp { get; set; }
         public string AvailabilityClassName { get; set; }
         public string Text { get; set; }
+        public string Id => $"CustomCtrl_%CustomCtrl_%{AddinApplicationBase.TempTabName}%{AddinApplicationBase.TempPanelName}%{CommandName}";
 
-        public abstract AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources);
+        public abstract AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false);
 
         protected static ImageSource GetImageSource(string path)
         {

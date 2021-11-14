@@ -13,7 +13,7 @@ namespace RevitAddinBase.RevitControls
 {
     public class ToggleButton : RevitCommandBase
     {
-        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources)
+        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
         {
             CreateRevitApiToggleButton(app, resources);
             var control = AdWin.ComponentManager.Ribbon;
@@ -33,8 +33,7 @@ namespace RevitAddinBase.RevitControls
 
             string name = CommandName;
             string text = (string)resources[$"{CommandName}_Button_caption"];
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string assemblyName = $@"{assemblyFolder}\InpadPlugins\InpadPlugins.dll";
+            string assemblyName = AddinApplicationBase.Instance.ExecutingAssembly.Location;
             string className = CommandName;
             ToggleButtonData toggleButtonData = new ToggleButtonData(name, text, assemblyName, className);
             panel.AddItem(toggleButtonData);

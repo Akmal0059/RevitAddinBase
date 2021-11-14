@@ -17,24 +17,26 @@ namespace RevitAddinBase.RevitControls
         public double TextboxWidth { get; set; }
         public string IconPath { get; set; }
 
-        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources)
+        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
         {
             CreateRevitApiTextBox(app, resources);
             var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == "Addins");
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == "Temp").Source;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
 
-            AdWin.RibbonTextBox ribbon = source.Items.FirstOrDefault(x => x.Name == CommandName) as AdWin.RibbonTextBox;
-            ribbon.Image = GetImageSource((Bitmap)resources[$"{CommandName}_Button_caption"]);
+            AdWin.RibbonTextBox ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonTextBox;
+            ribbon.ShowImageAsButton = true;
+            ribbon.ImageLocation = AdWin.RibbonTextBoxImageLocation.InsideRight;
+            ribbon.Image = GetImageSource((Bitmap)resources[$"{CommandName}_Button_image"]);
             return ribbon;
         }
 
         private void CreateRevitApiTextBox(UIControlledApplication app, Dictionary<string, object> resources)
         {
-            var panel = app.GetRibbonPanels(Tab.AddIns).FirstOrDefault(x => x.Name == "Temp");
+            var panel = app.GetRibbonPanels(AddinApplicationBase.TempTabName).FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
             if (panel == null)
-                panel = app.CreateRibbonPanel(Tab.AddIns, "Temp");
-
+                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
+            Text = (string)resources[$"{CommandName}_Button_caption"];
             string name = CommandName;
             TextBoxData tbData = new TextBoxData(name);
             panel.AddItem(tbData);

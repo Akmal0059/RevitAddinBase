@@ -11,7 +11,7 @@ namespace RevitAddinBase.RevitControls
 {
     public class ComboBox : ButtonListBase
     {
-        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources)
+        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
         {
             CreateRevitApiCombobox(app, resources);
             var control = AdWin.ComponentManager.Ribbon;

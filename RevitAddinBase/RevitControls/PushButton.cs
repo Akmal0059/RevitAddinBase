@@ -13,30 +13,39 @@ namespace RevitAddinBase.RevitControls
 {
     public class PushButton : RevitCommandBase
     {
-        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources)
+        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
         {
             CreateRevitApiButton(app, resources);
             var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == "Addins");
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == "Temp").Source;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
 
-            AdWin.RibbonButton ribbon = source.Items.FirstOrDefault(x => x.Name == CommandName) as AdWin.RibbonButton;
-            ribbon.LargeImage = GetImageSource((Bitmap)resources[$"{CommandName}_Button_caption"]);
+            AdWin.RibbonButton ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonButton;
+            ribbon.LargeImage = GetImageSource((Bitmap)resources[$"{CommandName}_Button_image"]);
+            ribbon.Image = GetImageSource((Bitmap)resources[$"{CommandName}_Button_image"]);
+            if (isStacked)
+            {
+                ribbon.Orientation = System.Windows.Controls.Orientation.Horizontal;
+                ribbon.Size = AdWin.RibbonItemSize.Standard;
+            }
             return ribbon;
         }
 
         private void CreateRevitApiButton(UIControlledApplication app, Dictionary<string, object> resources)
         {
-            var panel = app.GetRibbonPanels(Tab.AddIns).FirstOrDefault(x => x.Name == "Temp");
-            if (panel == null)
-                panel = app.CreateRibbonPanel(Tab.AddIns, "Temp");
+            var panels = app.GetRibbonPanels(AddinApplicationBase.TempTabName);
+            var control = AdWin.ComponentManager.Ribbon;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
 
+            var panel = panels.FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
+            if (panel == null)
+                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
+            Text = (string)resources[$"{CommandName}_Button_caption"];
             string name = CommandName;
-            string text = (string)resources[$"{CommandName}_Button_caption"];
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string assemblyName = $@"{assemblyFolder}\InpadPlugins\InpadPlugins.dll";
+            string assemblyName = AddinApplicationBase.Instance.ExecutingAssembly.Location;
             string className = CommandName;
-            PushButtonData pushButtonData = new PushButtonData(name, text, assemblyName, className);
+            PushButtonData pushButtonData = new PushButtonData(name, Text, assemblyName, className);
             panel.AddItem(pushButtonData);
         }
     }

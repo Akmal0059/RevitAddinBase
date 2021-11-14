@@ -30,13 +30,12 @@ namespace RevitAddinBase
         public static UIControlledApplication RevitUIApplication { get; set; }
         public static AddinApplicationBase Instance { get; private set; }
         private bool AllowInSessionLoading { get; } = true;
+        public abstract Assembly ExecutingAssembly { get; }
+
+        public const string TempTabName = "TempTab";
+        public const string TempPanelName = "TempPanel";
 
         //public static AddinApplicationBase GetInstance() => Instance; 
-
-        private AddinApplicationBase()
-        {
-
-        }
 
         Result IExternalApplication.OnShutdown(UIControlledApplication application)
         {
@@ -62,9 +61,16 @@ namespace RevitAddinBase
 
         Result IExternalApplication.OnStartup(UIControlledApplication application)
         {
-            //Instance = this;
+            Instance = this;
+            try
+            {
+                application.CreateRibbonTab(TempTabName);
+            }
+            catch { }
+            //application.CreateRibbonPanel("TempTab", "TempPanel");
+            var panels = application.GetRibbonPanels(AddinApplicationBase.TempTabName);
             string cannotBeLoadedMessage = "";
-            if (CanBeLoaded(application, out cannotBeLoadedMessage))
+            if (!CanBeLoaded(application, out cannotBeLoadedMessage))
             {
                 Autodesk.Revit.UI.TaskDialog.Show("error while loading", cannotBeLoadedMessage);
                 return Result.Cancelled;
@@ -90,7 +96,7 @@ namespace RevitAddinBase
             // String resources
             using (FileStream fs = new FileStream(resPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                ResourceReader rr = new ResourceReader(fs);
+                ResXResourceReader rr = new ResXResourceReader(fs);
                 foreach (DictionaryEntry item in rr)
                 {
                     resourcesDictionary.Add((string)item.Key, item.Value);
@@ -98,8 +104,8 @@ namespace RevitAddinBase
             }
 
             // Image resources
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string imgResPath = $@"{assemblyFolder}\InpadPlugins.Images.resources";
+            string assemblyFolder = Path.GetDirectoryName(ExecutingAssembly.Location);
+            string imgResPath = $@"{assemblyFolder}\InpadPlugins.Media.resx";
             using (FileStream fs = new FileStream(imgResPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                 ResXResourceReader rr = new ResXResourceReader(fs);
@@ -115,11 +121,12 @@ namespace RevitAddinBase
             {
                 var adWinTab = tab.CreateTab(uic_app, resourcesDictionary);
                 adWinTab.Title = tab.Title;
-                AdWin.ComponentManager.Ribbon.Tabs.Add(adWinTab);
             }
             //btn.LargeImage = ImageSourceFromBitmap((Bitmap)resorcesDictionary["Image"]);
             //btn.ItemText = (string)resorcesDictionary["Text"];
-
+            //var control = AdWin.ComponentManager.Ribbon;
+            //var tempTab = control.Tabs.FirstOrDefault(x => x.Name == TempTabName);
+            //control.Tabs.Remove(tempTab);
         }
         private string GetResPath(ControlledApplication uic_app)
         {
@@ -127,63 +134,63 @@ namespace RevitAddinBase
             switch (uic_app.Language)
             {
                 case LanguageType.English_USA:
-                    resPath = "en\\InpadPlugins.resources";
+                    resPath = "en\\InpadPlugins.resx";
                     break;
                 case LanguageType.German:
-                    resPath = "de\\InpadPlugins.resources";
+                    resPath = "de\\InpadPlugins.resx";
                     break;
                 case LanguageType.Spanish:
-                    resPath = "es\\InpadPlugins.resources";
+                    resPath = "es\\InpadPlugins.resx";
                     break;
                 case LanguageType.French:
-                    resPath = "fr\\InpadPlugins.resources";
+                    resPath = "fr\\InpadPlugins.resx";
                     break;
                 case LanguageType.Italian:
-                    resPath = "it\\InpadPlugins.resources";
+                    resPath = "it\\InpadPlugins.resx";
                     break;
                 case LanguageType.Dutch:
-                    resPath = "du\\InpadPlugins.resources";
+                    resPath = "du\\InpadPlugins.resx";
                     break;
                 case LanguageType.Chinese_Simplified:
-                    resPath = "ch\\InpadPlugins.resources";
+                    resPath = "ch\\InpadPlugins.resx";
                     break;
                 case LanguageType.Chinese_Traditional:
-                    resPath = "ch\\InpadPlugins.resources";
+                    resPath = "ch\\InpadPlugins.resx";
                     break;
                 case LanguageType.Japanese:
-                    resPath = "ja\\InpadPlugins.resources";
+                    resPath = "ja\\InpadPlugins.resx";
                     break;
                 case LanguageType.Korean:
-                    resPath = "ko\\InpadPlugins.resources";
+                    resPath = "ko\\InpadPlugins.resx";
                     break;
                 case LanguageType.Russian:
-                    resPath = "ru\\InpadPlugins.resources";
+                    resPath = "ru\\InpadPlugins.resx";
                     break;
                 case LanguageType.Czech:
-                    resPath = "cs\\InpadPlugins.resources";
+                    resPath = "cs\\InpadPlugins.resx";
                     break;
                 case LanguageType.Polish:
-                    resPath = "pl\\InpadPlugins.resources";
+                    resPath = "pl\\InpadPlugins.resx";
                     break;
                 case LanguageType.Hungarian:
-                    resPath = "hu\\InpadPlugins.resources";
+                    resPath = "hu\\InpadPlugins.resx";
                     break;
                 case LanguageType.Brazilian_Portuguese:
-                    resPath = "pt\\InpadPlugins.resources";
+                    resPath = "pt\\InpadPlugins.resx";
                     break;
                 case LanguageType.English_GB:
-                    resPath = "en\\InpadPlugins.resources";
+                    resPath = "en\\InpadPlugins.resx";
                     break;
                 default:
-                    resPath = "InpadPlugins.resources";
+                    resPath = "InpadPlugins.resx";
                     break;
             }
 
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string assemblyFolder = Path.GetDirectoryName(ExecutingAssembly.Location);
             if (File.Exists($@"{assemblyFolder}\{resPath}"))
                 return $@"{assemblyFolder}\{resPath}";
             else
-                return $@"{assemblyFolder}\InpadPlugins.resources";
+                return $@"{assemblyFolder}\InpadPlugins.resx";
         }
         private RevitContainers.RibbonTab[] Deserialize(string path)
         {

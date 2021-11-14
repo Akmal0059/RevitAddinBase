@@ -11,9 +11,11 @@ namespace RevitAddinBase.RevitControls
 {
     public class Label : RibbonItemBase
     {
-        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources)
+
+        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
         {
             AdWin.RibbonLabel ribbon = new AdWin.RibbonLabel();
+            ribbon.ShowText = true;
             ribbon.Text = (string)resources[$"{CommandName}_Button_caption"];
             return ribbon;
         }
