@@ -27,7 +27,7 @@ namespace RevitAddinBase.RevitControls
             AdWin.RibbonTextBox ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonTextBox;
             ribbon.ShowImageAsButton = true;
             ribbon.ImageLocation = AdWin.RibbonTextBoxImageLocation.InsideRight;
-            ribbon.Image = GetImageSource((Bitmap)resources[$"{CommandName}_Button_image"]);
+            ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             return ribbon;
         }
 
@@ -36,7 +36,7 @@ namespace RevitAddinBase.RevitControls
             var panel = app.GetRibbonPanels(AddinApplicationBase.TempTabName).FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
             if (panel == null)
                 panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
-            Text = (string)resources[$"{CommandName}_Button_caption"];
+            Text = (string)GetResx(resources, "_Button_caption");
             string name = CommandName;
             TextBoxData tbData = new TextBoxData(name);
             panel.AddItem(tbData);

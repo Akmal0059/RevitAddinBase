@@ -21,7 +21,7 @@ namespace RevitAddinBase.RevitControls
             var control = AdWin.ComponentManager.Ribbon;
             var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
             var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
-            SelectedIndex = (int?)resources[$"{CommandName}_SelectedIndex"];
+            SelectedIndex = (int?)GetResx(resources, "_SelectedIndex");
 
             AdWin.RibbonSplitButton ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonSplitButton;
             ribbon.IsSplit = true;
@@ -47,7 +47,7 @@ namespace RevitAddinBase.RevitControls
                 panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
 
             string name = CommandName;
-            Text = (string)resources[$"{CommandName}_Button_caption"];
+            Text = (string)GetResx(resources, "_Button_caption");
             UI.SplitButtonData splitButtonData = new UI.SplitButtonData(name, Text);
             panel.AddItem(splitButtonData);
         }

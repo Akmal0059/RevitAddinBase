@@ -47,6 +47,9 @@ namespace RevitAddinBase.RevitControls
         }
         protected static ImageSource GetImageSource(Bitmap bitmap)
         {
+            if (bitmap == null)
+                return null;
+
             var imageSource = new BitmapImage();
             using (MemoryStream memory = new MemoryStream())
             {
@@ -59,5 +62,14 @@ namespace RevitAddinBase.RevitControls
             }
             return imageSource;
         }
+        protected object GetResx(Dictionary<string, object> resources, string key)
+        {
+            string dictKey = $"{CommandName}{key}";
+            if (resources.ContainsKey(dictKey))
+                return resources[dictKey];
+            else
+                return null;
+        }
+
     }
 }

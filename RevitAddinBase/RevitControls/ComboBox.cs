@@ -15,10 +15,10 @@ namespace RevitAddinBase.RevitControls
         {
             CreateRevitApiCombobox(app, resources);
             var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == "Addins");
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == "Temp").Source;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
 
-            AdWin.RibbonCombo ribbon = source.Items.FirstOrDefault(x => x.Name == CommandName) as AdWin.RibbonCombo;
+            AdWin.RibbonCombo ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonCombo;
             foreach (var item in Items)
                 ribbon.Items.Add(item.CreateRibbon(app, resources));
             return ribbon;
@@ -26,12 +26,13 @@ namespace RevitAddinBase.RevitControls
 
         private void CreateRevitApiCombobox(UI.UIControlledApplication app, Dictionary<string, object> resources)
         {
-            var panel = app.GetRibbonPanels(UI.Tab.AddIns).FirstOrDefault(x => x.Name == "Temp");
+            var panels = app.GetRibbonPanels(AddinApplicationBase.TempTabName);
+            var panel = panels.FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
             if (panel == null)
-                panel = app.CreateRibbonPanel(UI.Tab.AddIns, "Temp");
+                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
 
             string name = CommandName;
-            string text = (string)resources[$"{CommandName}_Button_caption"];
+            string text = (string)GetResx(resources, "_Button_caption");
             UI.ComboBoxData pulldownData = new UI.ComboBoxData(name);
             panel.AddItem(pulldownData);
         }

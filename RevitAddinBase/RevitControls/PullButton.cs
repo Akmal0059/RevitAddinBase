@@ -21,8 +21,8 @@ namespace RevitAddinBase.RevitControls
             var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
 
             AdWin.RibbonSplitButton ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonSplitButton;
-            ribbon.Image = GetImageSource((Bitmap)resources[$"{CommandName}_Button_image"]);
-            ribbon.LargeImage = GetImageSource((Bitmap)resources[$"{CommandName}_Button_image"]);
+            ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
+            ribbon.LargeImage = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             ribbon.IsSplit = false;
             foreach (var item in Items)
                 ribbon.Items.Add(item.CreateRibbon(app, resources));
@@ -42,7 +42,7 @@ namespace RevitAddinBase.RevitControls
                 panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
 
             string name = CommandName;
-            Text = (string)resources[$"{CommandName}_Button_caption"];
+            Text = (string)GetResx(resources, "_Button_caption");
             UI.PulldownButtonData pulldownData = new UI.PulldownButtonData(name, Text);
             panel.AddItem(pulldownData);
         }

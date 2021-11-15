@@ -21,8 +21,17 @@ namespace RevitAddinBase.RevitControls
             var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
 
             AdWin.RibbonButton ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonButton;
-            ribbon.LargeImage = GetImageSource((Bitmap)resources[$"{CommandName}_Button_image"]);
-            ribbon.Image = GetImageSource((Bitmap)resources[$"{CommandName}_Button_image"]);
+            ribbon.LargeImage = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
+            ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
+            ribbon.Description = (string)GetResx(resources, "_Button_long_description");
+            ribbon.HelpSource = new Uri((string)GetResx(resources, "_Help_file_name"));
+            ribbon.ToolTip = new AdWin.RibbonToolTip()
+            {
+                Title = (string)GetResx(resources, "_Button_tooltip_text"),
+                Image = GetImageSource((Bitmap)GetResx(resources, "_Button_tooltip_image"))
+
+            };
+
             if (isStacked)
             {
                 ribbon.Orientation = System.Windows.Controls.Orientation.Horizontal;
@@ -41,7 +50,7 @@ namespace RevitAddinBase.RevitControls
             var panel = panels.FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
             if (panel == null)
                 panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
-            Text = (string)resources[$"{CommandName}_Button_caption"];
+            Text = (string)GetResx(resources, "_Button_caption");
             string name = CommandName;
             string assemblyName = AddinApplicationBase.Instance.ExecutingAssembly.Location;
             string className = CommandName;

@@ -15,11 +15,11 @@ namespace RevitAddinBase.RevitControls
         {
             CreateRevitApiSplitButton(app, resources);
             var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == "Addins");
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == "Temp").Source;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
 
-            AdWin.RibbonRadioButtonGroup ribbon = source.Items.FirstOrDefault(x => x.Name == CommandName) as AdWin.RibbonRadioButtonGroup;
-            ribbon.Image = GetImageSource((Bitmap)resources[$"{CommandName}_Button_caption"]);
+            AdWin.RibbonRadioButtonGroup ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonRadioButtonGroup;
+            ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_caption"));
             foreach (var item in Items)
                 ribbon.Items.Add(item.CreateRibbon(app, resources));
             return ribbon;
@@ -27,9 +27,10 @@ namespace RevitAddinBase.RevitControls
 
         private void CreateRevitApiSplitButton(UI.UIControlledApplication app, Dictionary<string, object> resources)
         {
-            var panel = app.GetRibbonPanels(UI.Tab.AddIns).FirstOrDefault(x => x.Name == "Temp");
+            var panels = app.GetRibbonPanels(AddinApplicationBase.TempTabName);
+            var panel = panels.FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
             if (panel == null)
-                panel = app.CreateRibbonPanel(UI.Tab.AddIns, "Temp");
+                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
 
             string name = CommandName;
             UI.RadioButtonGroupData radioGrData = new UI.RadioButtonGroupData(name);

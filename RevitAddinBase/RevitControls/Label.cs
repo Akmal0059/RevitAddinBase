@@ -16,7 +16,7 @@ namespace RevitAddinBase.RevitControls
         {
             AdWin.RibbonLabel ribbon = new AdWin.RibbonLabel();
             ribbon.ShowText = true;
-            ribbon.Text = (string)resources[$"{CommandName}_Button_caption"];
+            ribbon.Text = (string)GetResx(resources, "_Button_caption");
             return ribbon;
         }
     }

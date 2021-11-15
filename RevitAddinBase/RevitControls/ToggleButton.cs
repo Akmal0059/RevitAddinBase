@@ -17,22 +17,30 @@ namespace RevitAddinBase.RevitControls
         {
             CreateRevitApiToggleButton(app, resources);
             var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == "Addins");
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == "Temp").Source;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
 
-            AdWin.RibbonToggleButton toggle = source.Items.FirstOrDefault(x => x.Name == CommandName) as AdWin.RibbonToggleButton;
-            toggle.LargeImage = GetImageSource((Bitmap)resources[$"{CommandName}_Button_caption"]);
-            return toggle;
+            AdWin.RibbonToggleButton ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonToggleButton;
+            ribbon.LargeImage = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
+            ribbon.Description = (string)GetResx(resources, "_Button_long_description");
+            ribbon.HelpSource = new Uri((string)GetResx(resources, "_Help_file_name"));
+            ribbon.ToolTip = new AdWin.RibbonToolTip()
+            {
+                Title = (string)GetResx(resources, "_Button_tooltip_text"),
+                Image = GetImageSource((Bitmap)GetResx(resources, "_Button_tooltip_image"))
+            };
+            return ribbon;
         }
 
         private void CreateRevitApiToggleButton(UIControlledApplication app, Dictionary<string, object> resources)
         {
-            var panel = app.GetRibbonPanels(Tab.AddIns).FirstOrDefault(x => x.Name == "Temp");
+            var panels = app.GetRibbonPanels(AddinApplicationBase.TempTabName);
+            var panel = panels.FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
             if (panel == null)
-                panel = app.CreateRibbonPanel(Tab.AddIns, "Temp");
+                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
 
             string name = CommandName;
-            string text = (string)resources[$"{CommandName}_Button_caption"];
+            string text = (string)GetResx(resources, "_Button_caption");
             string assemblyName = AddinApplicationBase.Instance.ExecutingAssembly.Location;
             string className = CommandName;
             ToggleButtonData toggleButtonData = new ToggleButtonData(name, text, assemblyName, className);
