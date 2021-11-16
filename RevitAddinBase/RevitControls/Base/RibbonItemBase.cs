@@ -22,6 +22,7 @@ namespace RevitAddinBase.RevitControls
         public string ShortDescription { get; set; }
         public string ContextualHelp { get; set; }
         public string AvailabilityClassName { get; set; }
+        public bool IsSlideOut { get; set; }
         public string Text { get; set; }
         public string Id => $"CustomCtrl_%CustomCtrl_%{AddinApplicationBase.TempTabName}%{AddinApplicationBase.TempPanelName}%{CommandName}";
 

@@ -24,7 +24,10 @@ namespace RevitAddinBase.RevitControls
             ribbon.LargeImage = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             ribbon.Description = (string)GetResx(resources, "_Button_long_description");
-            ribbon.HelpSource = new Uri((string)GetResx(resources, "_Help_file_name"));
+            string uriStr = (string)GetResx(resources, "_Help_file_name");
+            if (uriStr != null)
+                ribbon.HelpSource = new Uri(uriStr);
+
             ribbon.ToolTip = new AdWin.RibbonToolTip()
             {
                 Title = (string)GetResx(resources, "_Button_tooltip_text"),

@@ -25,8 +25,17 @@ namespace RevitAddinBase.RevitContainers
             //source settings
 
             //source settings
-            
-            foreach (var item in Items)
+
+            foreach (var item in Items.Where(x => !x.IsSlideOut))
+            {
+                source.Items.Add(item.CreateRibbon(app, resources));
+            }
+
+            var slideOuts = Items.Where(x => x.IsSlideOut).ToList();
+
+            if (slideOuts.Count > 0)
+                source.Items.Add(new RibbonPanelBreak());
+            foreach (var item in slideOuts)
             {
                 source.Items.Add(item.CreateRibbon(app, resources));
             }
