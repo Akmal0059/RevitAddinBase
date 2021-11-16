@@ -34,7 +34,14 @@ namespace RevitAddinBase.RevitControls
 
             string name = CommandName;
             UI.RadioButtonGroupData radioGrData = new UI.RadioButtonGroupData(name);
-            panel.AddItem(radioGrData);
+            var btn = panel.AddItem(radioGrData);
+            string uriStr = (string)GetResx(resources, "_Help_file_name");
+            if (!string.IsNullOrWhiteSpace(uriStr))
+            {
+                string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string helpFilePath = $@"{appDataDir}\Inpad\Revit\HelpFiles\{uriStr}";
+                btn.SetContextualHelp(new UI.ContextualHelp(UI.ContextualHelpType.Url, helpFilePath));
+            }
         }
     }
 }

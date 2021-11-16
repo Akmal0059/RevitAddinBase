@@ -44,7 +44,14 @@ namespace RevitAddinBase.RevitControls
             string name = CommandName;
             Text = (string)GetResx(resources, "_Button_caption");
             UI.PulldownButtonData pulldownData = new UI.PulldownButtonData(name, Text);
-            panel.AddItem(pulldownData);
+            var btn = panel.AddItem(pulldownData);
+            string uriStr = (string)GetResx(resources, "_Help_file_name");
+            if (!string.IsNullOrWhiteSpace(uriStr))
+            {
+                string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string helpFilePath = $@"{appDataDir}\Inpad\Revit\HelpFiles\{uriStr}";
+                btn.SetContextualHelp(new UI.ContextualHelp(UI.ContextualHelpType.Url, helpFilePath));
+            }
         }
     }
 }

@@ -22,12 +22,14 @@ namespace RevitAddinBase.RevitControls
 
             AdWin.RibbonToggleButton ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonToggleButton;
             ribbon.LargeImage = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
-            ribbon.Description = (string)GetResx(resources, "_Button_long_description");
-            ribbon.HelpSource = new Uri((string)GetResx(resources, "_Help_file_name"));
+            //ribbon.Description = (string)GetResx(resources, "_Button_long_description");
+            object hideTextRes = GetResx(resources, "_Hide_text");
+            ribbon.ShowText = hideTextRes == null ? true : !(bool)hideTextRes;
             ribbon.ToolTip = new AdWin.RibbonToolTip()
             {
-                Title = (string)GetResx(resources, "_Button_tooltip_text"),
-                Image = GetImageSource((Bitmap)GetResx(resources, "_Button_tooltip_image"))
+                Title = (string)GetResx(resources, "_Button_caption"),
+                Image = GetImageSource((Bitmap)GetResx(resources, "_Button_tooltip_image")),
+                //Content = (string)GetResx(resources, "_Button_tooltip_text"),
             };
             return ribbon;
         }
@@ -44,7 +46,14 @@ namespace RevitAddinBase.RevitControls
             string assemblyName = AddinApplicationBase.Instance.ExecutingAssembly.Location;
             string className = CommandName;
             ToggleButtonData toggleButtonData = new ToggleButtonData(name, text, assemblyName, className);
-            panel.AddItem(toggleButtonData);
+            var btn = panel.AddItem(toggleButtonData);
+            string uriStr = (string)GetResx(resources, "_Help_file_name");
+            if (!string.IsNullOrWhiteSpace(uriStr))
+            {
+                string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string helpFilePath = $@"{appDataDir}\Inpad\Revit\HelpFiles\{uriStr}";
+                btn.SetContextualHelp(new Autodesk.Revit.UI.ContextualHelp(ContextualHelpType.Url, helpFilePath));
+            }
         }
     }
 }

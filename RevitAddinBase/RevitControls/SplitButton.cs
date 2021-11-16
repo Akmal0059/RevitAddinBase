@@ -27,15 +27,15 @@ namespace RevitAddinBase.RevitControls
             ribbon.IsSplit = true;
             foreach (var item in Items)
                 ribbon.Items.Add(item.CreateRibbon(app, resources));
-            if (SelectedIndex >= 0)
-            {
-                ribbon.Current = ribbon.Items[SelectedIndex.Value];
-                ribbon.IsSynchronizedWithCurrentItem = false;
-            }
             if (isStacked)
             {
                 ribbon.Orientation = System.Windows.Controls.Orientation.Horizontal;
                 ribbon.Size = AdWin.RibbonItemSize.Standard;
+            }
+            if (SelectedIndex >= 0)
+            {
+                ribbon.Current = ribbon.Items[SelectedIndex.Value];
+                ribbon.SynchronizeOption = AdWin.RibbonListButton.RibbonListButtonSynchronizeOption.Image;
             }
             return ribbon;
         }
@@ -49,7 +49,15 @@ namespace RevitAddinBase.RevitControls
             string name = CommandName;
             Text = (string)GetResx(resources, "_Button_caption");
             UI.SplitButtonData splitButtonData = new UI.SplitButtonData(name, Text);
-            panel.AddItem(splitButtonData);
+            var btn = panel.AddItem(splitButtonData);
+            string uriStr = (string)GetResx(resources, "_Help_file_name");
+            if (!string.IsNullOrWhiteSpace(uriStr))
+            {
+                string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string helpFilePath = $@"{appDataDir}\Inpad\Revit\HelpFiles\{uriStr}";
+                if (File.Exists(helpFilePath))
+                    btn.SetContextualHelp(new UI.ContextualHelp(UI.ContextualHelpType.Url, helpFilePath));
+            }
         }
     }
 }

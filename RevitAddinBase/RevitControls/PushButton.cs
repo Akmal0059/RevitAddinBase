@@ -23,16 +23,16 @@ namespace RevitAddinBase.RevitControls
             AdWin.RibbonButton ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonButton;
             ribbon.LargeImage = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
-            ribbon.Description = (string)GetResx(resources, "_Button_long_description");
-            string uriStr = (string)GetResx(resources, "_Help_file_name");
-            if (uriStr != null)
-                ribbon.HelpSource = new Uri(uriStr);
+            //ribbon.Description = (string)GetResx(resources, "_Button_long_description");
+            ribbon.IsToolTipEnabled = true;
 
+            object hideTextRes = GetResx(resources, "_Hide_text");
+            ribbon.ShowText = hideTextRes == null ? true : !(bool)hideTextRes;
             ribbon.ToolTip = new AdWin.RibbonToolTip()
             {
-                Title = (string)GetResx(resources, "_Button_tooltip_text"),
-                Image = GetImageSource((Bitmap)GetResx(resources, "_Button_tooltip_image"))
-
+                Title = (string)GetResx(resources, "_Button_caption"),
+                Image = GetImageSource((Bitmap)GetResx(resources, "_Button_tooltip_image")),
+                //Content = (string)GetResx(resources, "_Button_tooltip_text"),
             };
 
             if (isStacked)
@@ -58,7 +58,15 @@ namespace RevitAddinBase.RevitControls
             string assemblyName = AddinApplicationBase.Instance.ExecutingAssembly.Location;
             string className = CommandName;
             PushButtonData pushButtonData = new PushButtonData(name, Text, assemblyName, className);
-            panel.AddItem(pushButtonData);
+            var btn = panel.AddItem(pushButtonData);
+            string uriStr = (string)GetResx(resources, "_Help_file_name");
+
+            if (!string.IsNullOrWhiteSpace(uriStr))
+            {
+                string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string helpFilePath = $@"{appDataDir}\Inpad\Revit\HelpFiles\{uriStr}";
+                btn.SetContextualHelp(new Autodesk.Revit.UI.ContextualHelp(ContextualHelpType.Url, helpFilePath));
+            }
         }
     }
 }
