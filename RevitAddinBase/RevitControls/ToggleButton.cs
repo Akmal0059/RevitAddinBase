@@ -52,7 +52,8 @@ namespace RevitAddinBase.RevitControls
             {
                 string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string helpFilePath = $@"{appDataDir}\Inpad\Revit\HelpFiles\{uriStr}";
-                btn.SetContextualHelp(new Autodesk.Revit.UI.ContextualHelp(ContextualHelpType.Url, helpFilePath));
+                if (File.Exists(helpFilePath))
+                    btn.SetContextualHelp(new Autodesk.Revit.UI.ContextualHelp(ContextualHelpType.Url, helpFilePath));
             }
         }
     }

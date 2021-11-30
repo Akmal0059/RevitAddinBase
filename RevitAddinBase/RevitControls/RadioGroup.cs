@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AdWin = Autodesk.Windows;
 using System.Drawing;
+using System.IO;
 
 namespace RevitAddinBase.RevitControls
 {
@@ -40,7 +41,8 @@ namespace RevitAddinBase.RevitControls
             {
                 string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string helpFilePath = $@"{appDataDir}\Inpad\Revit\HelpFiles\{uriStr}";
-                btn.SetContextualHelp(new UI.ContextualHelp(UI.ContextualHelpType.Url, helpFilePath));
+                if (File.Exists(helpFilePath))
+                    btn.SetContextualHelp(new UI.ContextualHelp(UI.ContextualHelpType.Url, helpFilePath));
             }
         }
     }
