@@ -17,25 +17,25 @@ namespace RevitAddinBase.RevitControls
         public double TextboxWidth { get; set; }
         public string IconPath { get; set; }
 
-        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
+        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false)
         {
-            CreateRevitApiTextBox(app, resources);
+            CreateRevitApiTextBox(app, resources, tabText, panelText);
             var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == tabText);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == panelText).Source;
 
-            AdWin.RibbonTextBox ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonTextBox;
+            AdWin.RibbonTextBox ribbon = source.Items.FirstOrDefault(x => x.Id == GetId(tabText, panelText)) as AdWin.RibbonTextBox;
             ribbon.ShowImageAsButton = true;
             ribbon.ImageLocation = AdWin.RibbonTextBoxImageLocation.InsideRight;
             ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             return ribbon;
         }
 
-        private void CreateRevitApiTextBox(UIControlledApplication app, Dictionary<string, object> resources)
+        private void CreateRevitApiTextBox(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText)
         {
-            var panel = app.GetRibbonPanels(AddinApplicationBase.TempTabName).FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
+            var panel = app.GetRibbonPanels(tabText).FirstOrDefault(x => x.Name == panelText);
             if (panel == null)
-                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
+                panel = app.CreateRibbonPanel(tabText, panelText);
             Text = (string)GetResx(resources, "_Button_caption");
             string name = CommandName;
             TextBoxData tbData = new TextBoxData(name);

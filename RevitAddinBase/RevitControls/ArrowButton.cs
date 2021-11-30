@@ -9,7 +9,7 @@ namespace RevitAddinBase.RevitControls
 {
     public class ArrowButton : RibbonItemBase
     {
-        public override Autodesk.Windows.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
+        public override Autodesk.Windows.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false)
         {
             throw new NotImplementedException();
         }

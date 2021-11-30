@@ -17,13 +17,14 @@ namespace RevitAddinBase.RevitCommands
         /// <param name="commandData"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        protected internal abstract bool CanExecute(ExternalCommandData commandData, ElementSet elements);
+        protected abstract bool CanExecute(ExternalCommandData commandData, ElementSet elements);
 
         /// <summary>
         /// Checks if the context has permission to execute command at the moment. For example, due to license.
         /// </summary>
         /// <returns></returns>
-        protected internal abstract bool HasPermission();
+        protected abstract bool HasPermission();
+
         /// <summary>
         /// Main execution method of the external command.
         /// </summary>
@@ -31,7 +32,8 @@ namespace RevitAddinBase.RevitCommands
         /// <param name="message"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        protected internal abstract Result CommandExecute(ExternalCommandData commandData, ref string message, ElementSet elements);
+        protected abstract Result CommandExecute(ExternalCommandData commandData, ref string message, ElementSet elements);
+
         /// <summary>
         /// Execution wrapper to check context conditions and write log.
         /// </summary>
@@ -63,7 +65,7 @@ namespace RevitAddinBase.RevitCommands
         /// Writes command execution log. Virtual and empty by default.
         /// </summary>
         /// <param name="result"></param>
-        public virtual void WriteLog(CommandApplicationExecutionResult result)
+        protected virtual void WriteLog(CommandApplicationExecutionResult result)
         {
 
         }

@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace RevitAddinBase.RevitCommands
 {
-    public abstract class MultiCommandApplication : CommandApplicationBase 
+    public abstract class MultiCommandApplication 
     {
 
     }

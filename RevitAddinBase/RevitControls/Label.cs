@@ -12,7 +12,7 @@ namespace RevitAddinBase.RevitControls
     public class Label : RibbonItemBase
     {
 
-        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
+        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false)
         {
             AdWin.RibbonLabel ribbon = new AdWin.RibbonLabel();
             ribbon.ShowText = true;

@@ -12,26 +12,26 @@ namespace RevitAddinBase.RevitControls
 {
     public class RadioGroup : ButtonListBase
     {
-        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
+        public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false)
         {
-            CreateRevitApiSplitButton(app, resources);
+            CreateRevitApiSplitButton(app, resources, tabText, panelText);
             var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
+            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == tabText);
+            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == panelText).Source;
 
-            AdWin.RibbonRadioButtonGroup ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonRadioButtonGroup;
+            AdWin.RibbonRadioButtonGroup ribbon = source.Items.FirstOrDefault(x => x.Id == GetId(tabText, panelText)) as AdWin.RibbonRadioButtonGroup;
             ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_caption"));
             foreach (var item in Items)
-                ribbon.Items.Add(item.CreateRibbon(app, resources));
+                ribbon.Items.Add(item.CreateRibbon(app, resources, tabText, panelText));
             return ribbon;
         }
 
-        private void CreateRevitApiSplitButton(UI.UIControlledApplication app, Dictionary<string, object> resources)
+        private void CreateRevitApiSplitButton(UI.UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText)
         {
-            var panels = app.GetRibbonPanels(AddinApplicationBase.TempTabName);
-            var panel = panels.FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
+            var panels = app.GetRibbonPanels(tabText);
+            var panel = panels.FirstOrDefault(x => x.Name == panelText);
             if (panel == null)
-                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
+                panel = app.CreateRibbonPanel(tabText, panelText);
 
             string name = CommandName;
             UI.RadioButtonGroupData radioGrData = new UI.RadioButtonGroupData(name);

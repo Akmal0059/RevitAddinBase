@@ -29,7 +29,7 @@ namespace RevitAddinBase.RevitContainers
         public string Name { get; set; }
         public string Title { get; set; }
         public List<RibbonPanel> Panels { get; set; }
-        public AdWin.RibbonTab AdWindowsRibbonTab { get; private set; }
+        //public AdWin.RibbonTab AdWindowsRibbonTab { get; private set; }
         public RibbonTab()
         {
             Panels = new List<RibbonPanel>();
@@ -46,7 +46,7 @@ namespace RevitAddinBase.RevitContainers
             app.CreateRibbonTab(Title);
             var control = Autodesk.Windows.ComponentManager.Ribbon;
             Autodesk.Windows.RibbonTab tab = control.Tabs.FirstOrDefault(x => x.Name == Title);
-            AdWindowsRibbonTab = tab;
+            //AdWindowsRibbonTab = tab;
             //tab settings
 
             //tab settings

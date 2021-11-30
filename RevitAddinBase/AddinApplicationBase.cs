@@ -31,8 +31,8 @@ namespace RevitAddinBase
         protected internal static List<RevitContainers.RibbonTab> RibbonTabs { get; private set; }
 
         private string ExecutingAssemblyName;
-        public const string TempTabName = "TempTab";
-        public const string TempPanelName = "TempPanel";
+        //public const string TempTabName = "TempTab";
+        //public const string TempPanelName = "TempPanel";
 
         //public static AddinApplicationBase GetInstance() => Instance; 
 
@@ -63,23 +63,24 @@ namespace RevitAddinBase
             //try
             //{
             ExecutingAssemblyName = ExecutingAssembly.GetName().Name;
-            Instance = this;
-            try
-            {
-                application.CreateRibbonTab(TempTabName);
-                application.CreateRibbonPanel(TempTabName, TempPanelName);
-            }
-            catch (Exception ex)
-            {
-
-            }
-            var panels = application.GetRibbonPanels(TempTabName);
             string cannotBeLoadedMessage = "";
             if (!CanBeLoaded(application, out cannotBeLoadedMessage))
             {
                 Autodesk.Revit.UI.TaskDialog.Show("error while loading", cannotBeLoadedMessage);
                 return Result.Cancelled;
             }
+
+            Instance = this;
+            //try
+            //{
+            //    application.CreateRibbonTab(TempTabName);
+            //    application.CreateRibbonPanel(TempTabName, TempPanelName);
+            //}
+            //catch (Exception ex)
+            //{
+
+            //}
+            //var panels = application.GetRibbonPanels(TempTabName);
 
             RevitUIApplication = application;
 
@@ -139,9 +140,9 @@ namespace RevitAddinBase
             }
             //btn.LargeImage = ImageSourceFromBitmap((Bitmap)resorcesDictionary["Image"]);
             //btn.ItemText = (string)resorcesDictionary["Text"];
-            var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == TempTabName);
-            control.Tabs.Remove(tempTab);
+            //var control = AdWin.ComponentManager.Ribbon;
+            //var tempTab = control.Tabs.FirstOrDefault(x => x.Name == TempTabName);
+            //control.Tabs.Remove(tempTab);
         }
         private string GetResPath(ControlledApplication uic_app)
         {
