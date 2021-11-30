@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Xml.Serialization;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.UI;
 using AdWin = Autodesk.Windows;
 
 namespace RevitAddinBase
@@ -23,15 +20,15 @@ namespace RevitAddinBase
 
     public abstract class AddinApplicationBase : IExternalApplication
     {
-        public static string ApplicationName { get; }
-        public static string ApplicationGuid { get; }
-        public static RevitExternalApplicationType ApplicationType { get; }
-        public static Version ApplicationReleaseVersion { get; }
+        protected internal static string ApplicationName { get; }
+        protected internal static string ApplicationGuid { get; }
+        protected internal static RevitExternalApplicationType ApplicationType { get; }
+        protected internal static Version ApplicationReleaseVersion { get; }
         private string RibbonControlManifestFilePath { get; }
-        public static UIControlledApplication RevitUIApplication { get; set; }
-        public static AddinApplicationBase Instance { get; private set; }
-        private bool AllowInSessionLoading { get; } = true;
+        protected internal static UIControlledApplication RevitUIApplication { get; set; }
+        protected internal static AddinApplicationBase Instance { get; private set; }
         public abstract Assembly ExecutingAssembly { get; }
+        protected internal static List<RevitContainers.RibbonTab> RibbonTabs { get; private set; }
 
         private string ExecutingAssemblyName;
         public const string TempTabName = "TempTab";
@@ -47,14 +44,14 @@ namespace RevitAddinBase
             return result;
         }
 
-        private bool CanBeLoaded(UIControlledApplication app, out string message)
+        protected virtual bool CanBeLoaded(UIControlledApplication app, out string message)
         {
             message = "";
-            if (app.IsLateAddinLoading && !AllowInSessionLoading)
-            {
-                message = "Loading of this application mid Revit session is not allowed. Close and start again a Revit session to load the application"; //Consider culture sensitive resource usage
-                return false;
-            }
+            //if (app.IsLateAddinLoading && !AllowInSessionLoading)
+            //{
+            //    message = "Loading of this application mid Revit session is not allowed. Close and start again a Revit session to load the application"; //Consider culture sensitive resource usage
+            //    return false;
+            //}
 
             //Consider other checks
 
