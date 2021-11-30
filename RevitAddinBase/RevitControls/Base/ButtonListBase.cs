@@ -9,5 +9,10 @@ namespace RevitAddinBase.RevitControls
     public abstract class ButtonListBase:RibbonItemBase
     {
         public List<RibbonItemBase> Items { get; set; }
+
+        public ButtonListBase()
+        {
+            Items = new List<RibbonItemBase>();
+        }
     }
 }
