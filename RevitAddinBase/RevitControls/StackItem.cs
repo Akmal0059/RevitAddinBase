@@ -27,15 +27,21 @@ namespace RevitAddinBase.RevitControls
             for (int i = 0; i < StackedItems.Count; i++)
             {
                 UI.RibbonItem stackedItem = StackedItems[i];
-                if(stackedItem is UI.PulldownButton pdb)
+                if(stackedItem is UI.PulldownButton pdb && !(stackedItem is UI.SplitButton))
                 {
                     foreach (var pullDownItem in (Items[i] as PullButton).Items)
                         pdb.AddPushButton(pullDownItem.GetData(resources) as UI.PushButtonData);
                 }
                 else if (stackedItem is UI.SplitButton split)
                 {
-                    foreach (var pullDownItem in (Items[i] as PullButton).Items)
+                    foreach (var pullDownItem in (Items[i] as SplitButton).Items)
                         split.AddPushButton(pullDownItem.GetData(resources) as UI.PushButtonData);
+                }
+                else if(stackedItem is UI.TextBox tb)
+                {
+                    tb.ShowImageAsButton = true;
+                    tb.PromptText = (string)Items[i].GetResx(resources, "_Textbox_HintText");
+                    tb.Image = GetImageSource((Bitmap)Items[i].GetResx(resources, "_Button_image"));
                 }
             }
 
@@ -75,6 +81,8 @@ namespace RevitAddinBase.RevitControls
 
             return ribbon;
         }
+
+        
 
         private void SetUpRibbonItem(AdWin.RibbonItem ribbonItem, RibbonItemBase itemBase, Dictionary<string, object> resources, bool isStacked)
         {

@@ -6,7 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using Autodesk.Revit.UI;
+using RevitAddinBase.ViewModel;
 using AdWin = Autodesk.Windows;
 
 namespace RevitAddinBase.RevitControls
@@ -25,7 +27,13 @@ namespace RevitAddinBase.RevitControls
             ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             //ribbon.Description = (string)GetResx(resources, "_Button_long_description");
             ribbon.IsToolTipEnabled = true;
-
+            Binding visibilityBind = new Binding();
+            visibilityBind.NotifyOnSourceUpdated = true;
+            visibilityBind.NotifyOnTargetUpdated = true;
+            visibilityBind.Mode = BindingMode.TwoWay;
+            visibilityBind.Source = AddinApplicationBase.ViewModel;
+            visibilityBind.Path = new System.Windows.PropertyPath(AddinViewModel.IsVisibleProperty);
+            ribbon.IsVisibleBinding = visibilityBind;
             object hideTextRes = GetResx(resources, "_Hide_text");
             ribbon.ShowText = hideTextRes == null ? true : !(bool)hideTextRes;
             ribbon.ToolTip = new AdWin.RibbonToolTip()

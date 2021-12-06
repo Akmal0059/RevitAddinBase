@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI;
+using RevitAddinBase.ViewModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace RevitAddinBase
         protected internal static AddinApplicationBase Instance { get; private set; }
         public abstract Assembly ExecutingAssembly { get; }
         protected internal static List<RevitContainers.RibbonTab> RibbonTabs { get; private set; }
-
+        public static AddinViewModel ViewModel { get; private set; }
         private string ExecutingAssemblyName;
         //public const string TempTabName = "TempTab";
         //public const string TempPanelName = "TempPanel";
@@ -39,7 +40,7 @@ namespace RevitAddinBase
         Result IExternalApplication.OnShutdown(UIControlledApplication application)
         {
 
-
+            ViewModel = null;
             var result = Shutdown(application);
             return result;
         }
@@ -62,6 +63,7 @@ namespace RevitAddinBase
         {
             //try
             //{
+            ViewModel = new AddinViewModel();
             ExecutingAssemblyName = ExecutingAssembly.GetName().Name;
             string cannotBeLoadedMessage = "";
             if (!CanBeLoaded(application, out cannotBeLoadedMessage))

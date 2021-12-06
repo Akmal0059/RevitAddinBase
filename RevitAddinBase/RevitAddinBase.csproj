@@ -56,11 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinApplicationBase.cs" />
+    <Compile Include="RevitCommands\ComboboxHandler.cs" />
+    <Compile Include="RevitCommands\TextboxHandler.cs" />
     <Compile Include="RevitContainers\RibbonTab.cs" />
     <Compile Include="RevitControls\ArrowButton.cs" />
     <Compile Include="RevitCommands\Base\CommandApplicationBase.cs" />
     <Compile Include="RevitControls\Label.cs" />
-    <Compile Include="RevitCommands\MultiCommandApplication.cs" />
     <Compile Include="RevitControls\Base\RevitCommandBase.cs" />
     <Compile Include="RevitControls\Base\ButtonListBase.cs" />
     <Compile Include="RevitControls\ComboBox.cs" />
@@ -70,13 +71,13 @@
     <Compile Include="RevitControls\RadioGroup.cs" />
     <Compile Include="RevitContainers\RibbonPanel.cs" />
     <Compile Include="RevitControls\Base\RibbonItemBase.cs" />
-    <Compile Include="RevitCommands\SingletonApplication.cs" />
     <Compile Include="RevitCommands\SingletonCommand.cs" />
     <Compile Include="RevitControls\Separator.cs" />
     <Compile Include="RevitControls\SplitButton.cs" />
     <Compile Include="RevitControls\StackItem.cs" />
     <Compile Include="RevitControls\Textbox.cs" />
     <Compile Include="RevitControls\ToggleButton.cs" />
+    <Compile Include="ViewModel\AddinViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

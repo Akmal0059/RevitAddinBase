@@ -31,6 +31,13 @@ namespace RevitAddinBase.RevitControls
             return ribbon;
         }
 
+        public override RibbonItemData GetData(Dictionary<string, object> resources)
+        {
+            string name = CommandName;
+            TextBoxData tbData = new TextBoxData(name);
+            return tbData;
+        }
+
         private void CreateRevitApiTextBox(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText)
         {
             var panel = app.GetRibbonPanels(tabText).FirstOrDefault(x => x.Name == panelText);
