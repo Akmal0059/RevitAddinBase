@@ -66,6 +66,7 @@
     <Compile Include="RevitControls\Base\ButtonListBase.cs" />
     <Compile Include="RevitControls\ComboBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RevitControls\Model\RvtComboItem.cs" />
     <Compile Include="RevitControls\PullButton.cs" />
     <Compile Include="RevitControls\PushButton.cs" />
     <Compile Include="RevitControls\RadioGroup.cs" />
@@ -81,6 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RevitControls\Base\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

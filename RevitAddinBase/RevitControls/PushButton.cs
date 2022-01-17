@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using Autodesk.Revit.UI;
 using RevitAddinBase.ViewModel;
@@ -27,13 +28,7 @@ namespace RevitAddinBase.RevitControls
             ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             //ribbon.Description = (string)GetResx(resources, "_Button_long_description");
             ribbon.IsToolTipEnabled = true;
-            Binding visibilityBind = new Binding();
-            visibilityBind.NotifyOnSourceUpdated = true;
-            visibilityBind.NotifyOnTargetUpdated = true;
-            visibilityBind.Mode = BindingMode.TwoWay;
-            visibilityBind.Source = AddinApplicationBase.ViewModel;
-            visibilityBind.Path = new System.Windows.PropertyPath(AddinViewModel.IsVisibleProperty);
-            ribbon.IsVisibleBinding = visibilityBind;
+            ribbon.IsVisibleBinding = CreateBind(AddinApplicationBase.ViewModel, AddinViewModel.IsVisibleProperty);
             object hideTextRes = GetResx(resources, "_Hide_text");
             ribbon.ShowText = hideTextRes == null ? true : !(bool)hideTextRes;
             ribbon.ToolTip = new AdWin.RibbonToolTip()
@@ -86,6 +81,17 @@ namespace RevitAddinBase.RevitControls
                 if (File.Exists(helpFilePath))
                     btn.SetContextualHelp(new Autodesk.Revit.UI.ContextualHelp(ContextualHelpType.Url, helpFilePath));
             }
+        }
+
+        private BindingBase CreateBind(object seource, DependencyProperty dp)
+        {
+            Binding binding = new Binding();
+            binding.NotifyOnSourceUpdated = true;
+            //visibilityBind.NotifyOnTargetUpdated = true;
+            binding.Mode = BindingMode.TwoWay;
+            binding.Source = seource;
+            binding.Path = new PropertyPath(dp);
+            return binding;
         }
     }
 }

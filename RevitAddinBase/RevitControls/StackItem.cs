@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AdWin = Autodesk.Windows;
+using RevitAddinBase.RevitControls.Model;
 
 namespace RevitAddinBase.RevitControls
 {
@@ -43,6 +44,11 @@ namespace RevitAddinBase.RevitControls
                     tb.PromptText = (string)Items[i].GetResx(resources, "_Textbox_HintText");
                     tb.Image = GetImageSource((Bitmap)Items[i].GetResx(resources, "_Button_image"));
                 }
+                else if(stackedItem is UI.PushButton btn)
+                {
+                    if(btn.ClassName == "_")
+                        btn.Enabled = false;
+                }
             }
 
             var control = AdWin.ComponentManager.Ribbon;
@@ -68,6 +74,11 @@ namespace RevitAddinBase.RevitControls
                         AdWin.RibbonButton rBtn = listBtn.Items[j] as AdWin.RibbonButton;
                         SetUpRibbonItem(rBtn, (Items[itemBaseIndex] as ButtonListBase).Items[j], resources, isStacked);
                     }
+                }
+                else if(item is AdWin.RibbonCombo combo)
+                {
+                    itemBaseIndex++;
+                    SetUpCombobox(combo, Items[itemBaseIndex] as ComboBox, resources, isStacked);
                 }
             }
             //var firstItem = Items[0].CreateRibbon(app, resources, tabText, panelText, true);
@@ -108,6 +119,19 @@ namespace RevitAddinBase.RevitControls
                 }
                 ribbonItem.Size = AdWin.RibbonItemSize.Standard;
             }
+        }
+        
+        private void SetUpCombobox(AdWin.RibbonCombo ribbonCombo, ComboBox combo, Dictionary<string, object> resources, bool isStacked)
+        {
+            foreach (var item in combo.Items)
+            {
+                //SetUpRibbonItem(listBtn, item, resources, isStacked);
+                ribbonCombo.Items.Add(new RvtComboItem((string)item.GetResx(resources, "_Button_caption")));
+            }
+            var activator = Activator.CreateInstanceFrom(AddinApplicationBase.Instance.ExecutingAssembly.Location, combo.CommandName);
+            ComboBox unwraped = activator.Unwrap() as ComboBox;
+            unwraped.AddEventHandlers(ribbonCombo);
+            unwraped.SetDataTemplate(ribbonCombo);
         }
     }
 }
