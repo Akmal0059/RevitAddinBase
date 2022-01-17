@@ -26,6 +26,11 @@ namespace RevitAddinBase.RevitControls
             return ribbon;
         }
 
+        public override UI.RibbonItemData GetData(Dictionary<string, object> resources)
+        {
+            throw new NotImplementedException();
+        }
+
         private void CreateRevitApiSplitButton(UI.UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText)
         {
             var panels = app.GetRibbonPanels(tabText);

@@ -26,10 +26,7 @@ namespace RevitAddinBase.RevitControls
         public string Text { get; set; }
         public abstract AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false);
 
-        public virtual RibbonItemData GetData(Dictionary<string, object> resources)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract RibbonItemData GetData(Dictionary<string, object> resources);
         protected static ImageSource GetImageSource(string path)
         {
             if (path == null)

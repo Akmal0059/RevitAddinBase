@@ -63,6 +63,14 @@ namespace RevitAddinBase.RevitControls
             return ribbon;
         }
 
+        public override UI.RibbonItemData GetData(Dictionary<string, object> resources)
+        {
+            string name = CommandName;
+            Text = (string)GetResx(resources, "_Button_caption");
+            UI.SplitButtonData splitBtnData = new UI.SplitButtonData(name, "Split");
+            return splitBtnData;
+        }
+
         private void CreateRevitApiSplitButton(UI.UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText)
         {
             var panel = app.GetRibbonPanels(tabText).FirstOrDefault(x => x.Name == panelText);

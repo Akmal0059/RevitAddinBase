@@ -93,8 +93,6 @@ namespace RevitAddinBase.RevitControls
             return ribbon;
         }
 
-        
-
         private void SetUpRibbonItem(AdWin.RibbonItem ribbonItem, RibbonItemBase itemBase, Dictionary<string, object> resources, bool isStacked)
         {
             ribbonItem.LargeImage = GetImageSource((Bitmap)itemBase.GetResx(resources, "_Button_image"));
@@ -132,6 +130,11 @@ namespace RevitAddinBase.RevitControls
             ComboBox unwraped = activator.Unwrap() as ComboBox;
             unwraped.AddEventHandlers(ribbonCombo);
             unwraped.SetDataTemplate(ribbonCombo);
+        }
+
+        public override UI.RibbonItemData GetData(Dictionary<string, object> resources)
+        {
+            throw new NotImplementedException();
         }
     }
 }

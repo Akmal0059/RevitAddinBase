@@ -13,5 +13,10 @@ namespace RevitAddinBase.RevitControls
         {
             throw new NotImplementedException();
         }
+
+        public override RibbonItemData GetData(Dictionary<string, object> resources)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

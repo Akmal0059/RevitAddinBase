@@ -34,6 +34,11 @@ namespace RevitAddinBase.RevitControls
             return ribbon;
         }
 
+        public override RibbonItemData GetData(Dictionary<string, object> resources)
+        {
+            throw new NotImplementedException();
+        }
+
         private void CreateRevitApiToggleButton(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText)
         {
             var panels = app.GetRibbonPanels(tabText);

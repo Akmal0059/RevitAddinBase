@@ -13,5 +13,10 @@ namespace RevitAddinBase.RevitControls
         {
             return new Autodesk.Windows.RibbonSeparator();
         }
+
+        public override RibbonItemData GetData(Dictionary<string, object> resources)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
