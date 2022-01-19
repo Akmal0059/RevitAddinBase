@@ -12,6 +12,7 @@ namespace RevitAddinBase.RevitControls
 {
     public class RadioGroup : ButtonListBase
     {
+        public string GroupName { get; set; }
         public override AdWin.RibbonItem CreateRibbon(UI.UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false)
         {
             CreateRevitApiSplitButton(app, resources, tabText, panelText);
@@ -20,9 +21,14 @@ namespace RevitAddinBase.RevitControls
             var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == panelText).Source;
 
             AdWin.RibbonRadioButtonGroup ribbon = source.Items.FirstOrDefault(x => x.Id == GetId(tabText, panelText)) as AdWin.RibbonRadioButtonGroup;
-            ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_caption"));
-            foreach (var item in Items)
-                ribbon.Items.Add(item.CreateRibbon(app, resources, tabText, panelText));
+            //ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_caption"));
+            //foreach (var item in Items)
+            //    ribbon.Items.Add(item.CreateRibbon(app, resources, tabText, panelText));
+            for (int i = 0; i < ribbon.Items.Count; i++)
+            {
+                AdWin.RibbonToggleButton item = ribbon.Items[i] as AdWin.RibbonToggleButton;
+                //item.Image = GetImageSource((Bitmap)Items[i].GetResx(resources, "_Button_image"));
+            }
             return ribbon;
         }
 
@@ -40,14 +46,18 @@ namespace RevitAddinBase.RevitControls
 
             string name = CommandName;
             UI.RadioButtonGroupData radioGrData = new UI.RadioButtonGroupData(name);
-            var btn = panel.AddItem(radioGrData);
+            var radioGroup = panel.AddItem(radioGrData) as UI.RadioButtonGroup;
+            foreach (var item in Items)
+            {
+                radioGroup.AddItem(item.GetData(resources) as UI.ToggleButtonData);
+            }
             string uriStr = (string)GetResx(resources, "_Help_file_name");
             if (!string.IsNullOrWhiteSpace(uriStr))
             {
                 string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string helpFilePath = $@"{appDataDir}\Inpad\Revit\HelpFiles\{uriStr}";
                 if (File.Exists(helpFilePath))
-                    btn.SetContextualHelp(new UI.ContextualHelp(UI.ContextualHelpType.Url, helpFilePath));
+                    radioGroup.SetContextualHelp(new UI.ContextualHelp(UI.ContextualHelpType.Url, helpFilePath));
             }
         }
     }

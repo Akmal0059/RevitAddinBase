@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Reflection;
 using System.IO;
+using UI = Autodesk.Revit.UI;
 
 namespace RevitAddinBase.RevitControls
 {
     public class ToggleButton : RevitCommandBase
     {
+        public string GroupName { get; set; }
         public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false)
         {
             CreateRevitApiToggleButton(app, resources, tabText, panelText);
@@ -21,7 +23,7 @@ namespace RevitAddinBase.RevitControls
             var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == panelText).Source;
 
             AdWin.RibbonToggleButton ribbon = source.Items.FirstOrDefault(x => x.Id == GetId(tabText, panelText)) as AdWin.RibbonToggleButton;
-            ribbon.LargeImage = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
+            //ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
             //ribbon.Description = (string)GetResx(resources, "_Button_long_description");
             object hideTextRes = GetResx(resources, "_Hide_text");
             ribbon.ShowText = hideTextRes == null ? true : !(bool)hideTextRes;
@@ -36,7 +38,13 @@ namespace RevitAddinBase.RevitControls
 
         public override RibbonItemData GetData(Dictionary<string, object> resources)
         {
-            throw new NotImplementedException();
+            Text = (string)GetResx(resources, "_Button_caption");
+            string name = CommandName;
+            string assemblyName = AddinApplicationBase.Instance.ExecutingAssembly.Location;
+            string className = CommandName;
+            ToggleButtonData toggleButtonData = new ToggleButtonData(name, Text, assemblyName, className);
+            toggleButtonData.LargeImage = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
+            return toggleButtonData;
         }
 
         private void CreateRevitApiToggleButton(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText)
@@ -51,7 +59,7 @@ namespace RevitAddinBase.RevitControls
             string assemblyName = AddinApplicationBase.Instance.ExecutingAssembly.Location;
             string className = CommandName;
             ToggleButtonData toggleButtonData = new ToggleButtonData(name, text, assemblyName, className);
-            var btn = panel.AddItem(toggleButtonData);
+            var btn = panel.AddItem(toggleButtonData) as UI.ToggleButton;
             string uriStr = (string)GetResx(resources, "_Help_file_name");
             if (!string.IsNullOrWhiteSpace(uriStr))
             {
