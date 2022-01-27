@@ -26,11 +26,12 @@ namespace RevitAddinBase.RevitContainers
     public class RibbonTab
     {
         public string Name { get; set; }
+        public string Title { get; set; }
         public List<RibbonPanel> Panels { get; set; }
 
         public RibbonTab()
         {
-
+            Panels = new List<RibbonPanel>();
         }
 
         public RibbonTab(string name)
@@ -39,25 +40,22 @@ namespace RevitAddinBase.RevitContainers
             Panels = new List<RibbonPanel>();
         }
 
-        public void Serialize(string path)
+        public Autodesk.Windows.RibbonTab CreateTab(Autodesk.Revit.UI.UIControlledApplication app, Dictionary<string, object> resources)
         {
-            XmlSerializer formatter = new XmlSerializer(typeof(RibbonTab));
+            app.CreateRibbonTab(Title);
+            var control = Autodesk.Windows.ComponentManager.Ribbon;
+            Autodesk.Windows.RibbonTab tab = control.Tabs.FirstOrDefault(x => x.Name == Title);
+            //tab settings
 
-            // получаем поток, куда будем записывать сериализованный объект
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            //tab settings
+            foreach (var panel in Panels)
             {
-                formatter.Serialize(fs, this);
+                app.CreateRibbonPanel(Title, panel.Text);
+                var createdPanel = panel.CreatePanel(app, resources, tab);
+                //tab.Panels.Add(createdPanel);
             }
-        }
-        public static RibbonTab Deserialize(string path)
-        {
-            RibbonTab panel = null;
-            XmlSerializer formatter = new XmlSerializer(typeof(RibbonTab));
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                panel = (RibbonTab)formatter.Deserialize(fs);
-            }
-            return panel;
+
+            return tab;
         }
     }
 }
