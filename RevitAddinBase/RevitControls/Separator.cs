@@ -9,9 +9,14 @@ namespace RevitAddinBase.RevitControls
 {
     public class Separator : RibbonItemBase
     {
-        public override Autodesk.Windows.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
+        public override Autodesk.Windows.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false)
         {
             return new Autodesk.Windows.RibbonSeparator();
+        }
+
+        public override RibbonItemData GetData(Dictionary<string, object> resources)
+        {
+            throw new NotImplementedException();
         }
     }
 }

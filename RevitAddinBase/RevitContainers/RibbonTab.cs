@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using AdWin = Autodesk.Windows;
 
 namespace RevitAddinBase.RevitContainers
 {
@@ -28,7 +29,7 @@ namespace RevitAddinBase.RevitContainers
         public string Name { get; set; }
         public string Title { get; set; }
         public List<RibbonPanel> Panels { get; set; }
-
+        //public AdWin.RibbonTab AdWindowsRibbonTab { get; private set; }
         public RibbonTab()
         {
             Panels = new List<RibbonPanel>();
@@ -40,21 +41,22 @@ namespace RevitAddinBase.RevitContainers
             Panels = new List<RibbonPanel>();
         }
 
-        public Autodesk.Windows.RibbonTab CreateTab(Autodesk.Revit.UI.UIControlledApplication app, Dictionary<string, object> resources)
+        public AdWin.RibbonTab CreateTab(Autodesk.Revit.UI.UIControlledApplication app, Dictionary<string, object> resources)
         {
             app.CreateRibbonTab(Title);
             var control = Autodesk.Windows.ComponentManager.Ribbon;
             Autodesk.Windows.RibbonTab tab = control.Tabs.FirstOrDefault(x => x.Name == Title);
+            //AdWindowsRibbonTab = tab;
             //tab settings
 
             //tab settings
             foreach (var panel in Panels)
             {
-                app.CreateRibbonPanel(Title, panel.Text);
+                var ribbonPanel = app.CreateRibbonPanel(Title, panel.Text);
                 var createdPanel = panel.CreatePanel(app, resources, tab);
                 //tab.Panels.Add(createdPanel);
             }
-
+            
             return tab;
         }
     }

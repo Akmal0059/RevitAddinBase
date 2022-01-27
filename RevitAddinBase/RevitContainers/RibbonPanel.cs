@@ -1,13 +1,8 @@
-﻿using RevitAddinBase.RevitControls;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+﻿using Autodesk.Revit.UI;
 using Autodesk.Windows;
-using Autodesk.Revit.UI;
+using RevitAddinBase.RevitControls;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RevitAddinBase.RevitContainers
 {
@@ -17,9 +12,15 @@ namespace RevitAddinBase.RevitContainers
         public string Name { get; set; }
         public string Text { get; set; }
         public List<RibbonItemBase> Items { get; set; }
+        //public Autodesk.Windows.RibbonPanel AdWindowsPanel { get; private set; }
 
         public Autodesk.Windows.RibbonPanel CreatePanel(UIControlledApplication app, Dictionary<string, object> resources, Autodesk.Windows.RibbonTab tab)
         {
+            try
+            {
+                app.CreateRibbonPanel(tab.Title, Text);
+            }
+            catch { }
             Autodesk.Windows.RibbonPanel panel = tab.Panels.FirstOrDefault(x => x.Source.Title == Text);
             RibbonPanelSource source = panel.Source;
             //source settings
@@ -28,7 +29,8 @@ namespace RevitAddinBase.RevitContainers
 
             foreach (var item in Items.Where(x => !x.IsSlideOut))
             {
-                source.Items.Add(item.CreateRibbon(app, resources));
+                //source.Items.Add(item.CreateRibbon(app, resources, tab.Title, Text));
+                item.CreateRibbon(app, resources, tab.Title, Text);
             }
 
             var slideOuts = Items.Where(x => x.IsSlideOut).ToList();
@@ -37,9 +39,11 @@ namespace RevitAddinBase.RevitContainers
                 source.Items.Add(new RibbonPanelBreak());
             foreach (var item in slideOuts)
             {
-                source.Items.Add(item.CreateRibbon(app, resources));
+                //source.Items.Add(item.CreateRibbon(app, resources, tab.Title, Text));
+                item.CreateRibbon(app, resources, tab.Title, Text);
             }
             panel.Source = source;
+
             return panel;
         }
     }

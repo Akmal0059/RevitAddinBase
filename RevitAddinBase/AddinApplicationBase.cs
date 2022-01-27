@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.UI;
+using RevitAddinBase.ViewModel;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Xml.Serialization;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.UI;
 using AdWin = Autodesk.Windows;
 
 namespace RevitAddinBase
@@ -23,38 +21,38 @@ namespace RevitAddinBase
 
     public abstract class AddinApplicationBase : IExternalApplication
     {
-        public static string ApplicationName { get; }
-        public static string ApplicationGuid { get; }
-        public static RevitExternalApplicationType ApplicationType { get; }
-        public static Version ApplicationReleaseVersion { get; }
+        protected internal static string ApplicationName { get; }
+        protected internal static string ApplicationGuid { get; }
+        protected internal static RevitExternalApplicationType ApplicationType { get; }
+        protected internal static Version ApplicationReleaseVersion { get; }
         private string RibbonControlManifestFilePath { get; }
-        public static UIControlledApplication RevitUIApplication { get; set; }
-        public static AddinApplicationBase Instance { get; private set; }
-        private bool AllowInSessionLoading { get; } = true;
+        protected internal static UIControlledApplication RevitUIApplication { get; set; }
+        protected internal static AddinApplicationBase Instance { get; private set; }
         public abstract Assembly ExecutingAssembly { get; }
-
+        protected internal static List<RevitContainers.RibbonTab> RibbonTabs { get; private set; }
+        public static AddinViewModel ViewModel { get; private set; }
         private string ExecutingAssemblyName;
-        public const string TempTabName = "TempTab";
-        public const string TempPanelName = "TempPanel";
+        //public const string TempTabName = "TempTab";
+        //public const string TempPanelName = "TempPanel";
 
         //public static AddinApplicationBase GetInstance() => Instance; 
 
         Result IExternalApplication.OnShutdown(UIControlledApplication application)
         {
 
-
+            ViewModel = null;
             var result = Shutdown(application);
             return result;
         }
 
-        private bool CanBeLoaded(UIControlledApplication app, out string message)
+        protected virtual bool CanBeLoaded(UIControlledApplication app, out string message)
         {
             message = "";
-            if (app.IsLateAddinLoading && !AllowInSessionLoading)
-            {
-                message = "Loading of this application mid Revit session is not allowed. Close and start again a Revit session to load the application"; //Consider culture sensitive resource usage
-                return false;
-            }
+            //if (app.IsLateAddinLoading && !AllowInSessionLoading)
+            //{
+            //    message = "Loading of this application mid Revit session is not allowed. Close and start again a Revit session to load the application"; //Consider culture sensitive resource usage
+            //    return false;
+            //}
 
             //Consider other checks
 
@@ -65,24 +63,26 @@ namespace RevitAddinBase
         {
             //try
             //{
+            ViewModel = new AddinViewModel();
             ExecutingAssemblyName = ExecutingAssembly.GetName().Name;
-            Instance = this;
-            try
-            {
-                application.CreateRibbonTab(TempTabName);
-                application.CreateRibbonPanel(TempTabName, TempPanelName);
-            }
-            catch (Exception ex)
-            {
-
-            }
-            var panels = application.GetRibbonPanels(TempTabName);
             string cannotBeLoadedMessage = "";
             if (!CanBeLoaded(application, out cannotBeLoadedMessage))
             {
                 Autodesk.Revit.UI.TaskDialog.Show("error while loading", cannotBeLoadedMessage);
                 return Result.Cancelled;
             }
+
+            Instance = this;
+            //try
+            //{
+            //    application.CreateRibbonTab(TempTabName);
+            //    application.CreateRibbonPanel(TempTabName, TempPanelName);
+            //}
+            //catch (Exception ex)
+            //{
+
+            //}
+            //var panels = application.GetRibbonPanels(TempTabName);
 
             RevitUIApplication = application;
 
@@ -142,9 +142,9 @@ namespace RevitAddinBase
             }
             //btn.LargeImage = ImageSourceFromBitmap((Bitmap)resorcesDictionary["Image"]);
             //btn.ItemText = (string)resorcesDictionary["Text"];
-            var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == TempTabName);
-            control.Tabs.Remove(tempTab);
+            //var control = AdWin.ComponentManager.Ribbon;
+            //var tempTab = control.Tabs.FirstOrDefault(x => x.Name == TempTabName);
+            //control.Tabs.Remove(tempTab);
         }
         private string GetResPath(ControlledApplication uic_app)
         {

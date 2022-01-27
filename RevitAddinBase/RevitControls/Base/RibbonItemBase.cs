@@ -24,10 +24,9 @@ namespace RevitAddinBase.RevitControls
         public string AvailabilityClassName { get; set; }
         public bool IsSlideOut { get; set; }
         public string Text { get; set; }
-        public string Id => $"CustomCtrl_%CustomCtrl_%{AddinApplicationBase.TempTabName}%{AddinApplicationBase.TempPanelName}%{CommandName}";
+        public abstract AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false);
 
-        public abstract AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false);
-
+        public abstract RibbonItemData GetData(Dictionary<string, object> resources);
         protected static ImageSource GetImageSource(string path)
         {
             if (path == null)
@@ -63,7 +62,7 @@ namespace RevitAddinBase.RevitControls
             }
             return imageSource;
         }
-        protected object GetResx(Dictionary<string, object> resources, string key)
+        public object GetResx(Dictionary<string, object> resources, string key)
         {
             string dictKey = $"{CommandName}{key}";
             if (resources.ContainsKey(dictKey))
@@ -71,6 +70,7 @@ namespace RevitAddinBase.RevitControls
             else
                 return null;
         }
+        public string GetId(string tabText, string panelText) => $"CustomCtrl_%CustomCtrl_%{tabText}%{panelText}%{CommandName}";
 
     }
 }

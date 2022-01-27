@@ -17,29 +17,16 @@ namespace RevitAddinBase.RevitControls
         public double TextboxWidth { get; set; }
         public string IconPath { get; set; }
 
-        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, bool isStacked = false)
+        public override AdWin.RibbonItem CreateRibbon(UIControlledApplication app, Dictionary<string, object> resources, string tabText, string panelText, bool isStacked = false)
         {
-            CreateRevitApiTextBox(app, resources);
-            var control = AdWin.ComponentManager.Ribbon;
-            var tempTab = control.Tabs.FirstOrDefault(x => x.Name == AddinApplicationBase.TempTabName);
-            var source = tempTab.Panels.FirstOrDefault(x => x.Source.Title == AddinApplicationBase.TempPanelName).Source;
-
-            AdWin.RibbonTextBox ribbon = source.Items.FirstOrDefault(x => x.Id == Id) as AdWin.RibbonTextBox;
-            ribbon.ShowImageAsButton = true;
-            ribbon.ImageLocation = AdWin.RibbonTextBoxImageLocation.InsideRight;
-            ribbon.Image = GetImageSource((Bitmap)GetResx(resources, "_Button_image"));
-            return ribbon;
+            throw new NotImplementedException();
         }
 
-        private void CreateRevitApiTextBox(UIControlledApplication app, Dictionary<string, object> resources)
+        public override RibbonItemData GetData(Dictionary<string, object> resources)
         {
-            var panel = app.GetRibbonPanels(AddinApplicationBase.TempTabName).FirstOrDefault(x => x.Name == AddinApplicationBase.TempPanelName);
-            if (panel == null)
-                panel = app.CreateRibbonPanel(AddinApplicationBase.TempTabName, AddinApplicationBase.TempPanelName);
-            Text = (string)GetResx(resources, "_Button_caption");
             string name = CommandName;
             TextBoxData tbData = new TextBoxData(name);
-            panel.AddItem(tbData);
+            return tbData;
         }
     }
 }
